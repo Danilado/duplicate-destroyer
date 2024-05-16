@@ -23,8 +23,7 @@ def get_subdirs(dir_path: str) -> list[str]:
     return sorted(
         list(
             filter(
-                lambda name: os.path.isdir(name)
-                and name.startswith(DIR_PREFIX),
+                lambda name: name.startswith(DIR_PREFIX),
                 map(
                     lambda filename: os.fsdecode(filename),
                     os.listdir(os.fsencode(dir_path))
