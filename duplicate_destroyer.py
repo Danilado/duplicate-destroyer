@@ -141,7 +141,7 @@ def main():
     if conf == "YES":
         replace_associations(associations)
     else:
-        print("Мудрое решение, хорошего дня")
+        print("A wise decision, have a great day")
 
 
 if __name__ == "__main__":
