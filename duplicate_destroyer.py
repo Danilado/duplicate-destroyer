@@ -86,7 +86,7 @@ def unique(arr: list) -> list:
 def print_associations(assocs: dict[str, str]) -> None:
     print("associations: ")
     for val in unique(list(assocs.values())):
-        print(f"files equal to {val}:" if not val.endswith(
+        print(f"files equal to {val}:" if SUBDIR_TO_CHECK == "" or not val.endswith(
             SUBDIR_TO_CHECK) else f"folders equal to {val}:")
         print(*sorted([key for key in assocs.keys()
               if assocs[key] == val]), sep="\n", end="\n\n")
