@@ -3,7 +3,7 @@ from filecmp import cmpfiles
 from itertools import combinations
 
 # the to the directory which subdirectories should be checked
-MAIN_PATH = "./"
+MAIN_PATH = "../"
 
 # prefix of directories to be checked
 # can be empty
@@ -11,12 +11,14 @@ DIR_PREFIX = "lab_"
 
 # name of subdir in each subdirectory of the main path
 # can be empty
-SUBDIR_TO_CHECK = "func_tests/scripts"
+SUBDIR_TO_CHECK = ""
 
 # filenames to check
 # does not support *
-FILES_TO_CHECK = ["pos_case.sh", "neg_case.sh",
-                  "func_tests.sh", "comparator.sh"]
+FILES_TO_CHECK = ["clean.sh", "go.sh",
+                  "collect_coverage.sh", "build_debug.sh",
+                  "build_release.sh", "build_debug_msan.sh",
+                  "build_debug_asan.sh", "build_debug_ubsan.sh"]
 
 
 def get_subdirs(dir_path: str) -> list[str]:
@@ -86,8 +88,8 @@ def unique(arr: list) -> list:
 def print_associations(assocs: dict[str, str]) -> None:
     print("associations: ")
     for val in unique(list(assocs.values())):
-        print(f"files equal to {val}:" if SUBDIR_TO_CHECK == "" or not val.endswith(
-            SUBDIR_TO_CHECK) else f"folders equal to {val}:")
+        print(f"files equal to {val}:" if not os.path.isdir(
+            val) else f"folders equal to {val}:")
         print(*sorted([key for key in assocs.keys()
               if assocs[key] == val]), sep="\n", end="\n\n")
 
@@ -119,7 +121,7 @@ def replace_directory(path1: str, path2: str) -> None:
 
 def replace_associations(assocs: dict[str, str]) -> None:
     for key in list(assocs.keys()):
-        if key.endswith(SUBDIR_TO_CHECK):
+        if os.path.isdir(key):
             replace_directory(key, assocs[key])
         else:
             replace_file(key, assocs[key])
